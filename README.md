@@ -28,6 +28,7 @@ This repository contains a simple game implemented in Python using the Mediapipe
 Use the following code in command line to install required modules
        `pip install mediapipe opencv-python pygame
 `
+
 ###Key Features
 + Real-time hand tracking using MediaPipe
 + Catching balls with fingertip collision detection
@@ -70,7 +71,7 @@ Multiple classes have been used to make this game. Their Explanation is as follo
 As the name suggests this is mainly used to used to track all stats of ball moving on screen and to update the ball acoording to the possible interactions.
 
 #####Initialization
-    
+```python
     def __init__(self,x,y,r,velocity_x, velocity_y,ball_color):
         self.x = x
         self.y = y
@@ -78,9 +79,11 @@ As the name suggests this is mainly used to used to track all stats of ball movi
         self.ball_color = ball_color
         self.velocity_x = velocity_x
         self.velocity_y = velocity_y
+```
 
 #####Creating New Ball
 
+```python
     @classmethod
     def create_ball(cls):
         new_ball = cls(
@@ -93,9 +96,11 @@ As the name suggests this is mainly used to used to track all stats of ball movi
             )
         if BallTracking.check_new_ball(new_ball.x,new_ball.r):
             return new_ball
+```
 
 #####Checking New Ball
 
+```python
     def check_new_ball(x,r):
         for i in balls_list:
             if i:
@@ -103,18 +108,22 @@ As the name suggests this is mainly used to used to track all stats of ball movi
             if abs(i.x - x) <= i.r + r:
                 return False
         return True
+```
 
 #####Ball and Boundary Interaction
 
+```python
     def check_ball_boundary_interaction(self):
         if self.x-self.r<=0 or self.x+self.r>=screen_width:
             self.velocity_x=-self.velocity_x
         if self.y-2*self.r>=screen_height:
             balls_list.remove(self)
             balls_list.append(BallTracking.create_ball())
+```
 
 #####Ball to Ball Interaction
 
+```python
     def check_balls_interaction():
         for i in range(len(balls_list)):
             for j in range(len(balls_list)):
@@ -124,15 +133,19 @@ As the name suggests this is mainly used to used to track all stats of ball movi
                         
                         balls_list[i].velocity_x, balls_list[j].velocity_x = balls_list[j].velocity_x, balls_list[i].velocity_x
                         balls_list[i].velocity_y, balls_list[j].velocity_y = balls_list[j].velocity_y, balls_list[i].velocity_y
+```
 
 
 #####Ball's Position Change
+```python
     def update_ball(self):
         self.y += self.velocity_y
         self.x += self.velocity_x
+```
     
 #####Index Finger and Ball Interaction
 
+```python
     def check_finger_ball_interaction(self, finger_x, finger_y):
         global HandColor,Score
         if finger_x==None or finger_y==None:
@@ -147,12 +160,14 @@ As the name suggests this is mainly used to used to track all stats of ball movi
             Sound.Sound_Play_Loss()
             return 1, self.ball_color
         return 0, HandColor
+```
 
 ####**class HandRecognition**
 
 It uses mediapipe module to track hands and index finger.
 
 #####Initialization
+```python
     def __init__(self):
         self.mp_hands = mp.solutions.hands.Hands(
             max_num_hands=1,  # Enforce only one hand detection
@@ -160,9 +175,11 @@ It uses mediapipe module to track hands and index finger.
             min_tracking_confidence=0.1
         )
         self.mp_drawing = mp.solutions.drawing_utils
+```
 
 #####Index Finger Coordinated
 
+```python
     def get_index_fingertip_coordinates(self, hand_landmarks_list, frame):
         if hand_landmarks_list:
             hand_landmarks = hand_landmarks_list[0]  # Access the first (and only) hand
@@ -172,9 +189,11 @@ It uses mediapipe module to track hands and index finger.
             return x, y
         else:
             return None, None
+```
 
 #####Hand Detection
 
+```python
     def detect_and_highlight_hands(self, frame):
         results = self.mp_hands.process(frame)
         hand_landmarks_list = results.multi_hand_landmarks
@@ -191,6 +210,7 @@ It uses mediapipe module to track hands and index finger.
             )
 
         return frame, hand_landmarks_list
+```
 
 ####class GameEnvironment:
 
@@ -198,47 +218,60 @@ This used pygame module to create a gaming environment.
 
 #####Initialization
 
+```python
     def __init__(self):
         self.screen = pygame.display.set_mode((screen_width, screen_height))
         pygame.display.set_caption("Color Harmony Challenge")
+```
 
 #####Creation of Balls
 
+```python
     def draw_balls(self,ball):
         if ball.x:
             pygame.draw.circle(self.screen, ball.ball_color, (ball.x, ball.y), ball.r)
+```
             
 #####Index Finger 
 
+```python
     def draw_Index_finger(self,x,y):
         if x and y:
             pygame.draw.circle(self.screen, HandColor, (x,y), 10)
+```
             
 #####Time
 
+```python
     def display_time(self, remaining_time):
         font = pygame.font.Font(None, 72)
         text = font.render(f"Time: {remaining_time // 60:02d}:{remaining_time % 60:02d}", True, (0, 0, 0))
         self.screen.blit(text, (10, 10))
+```
 
 #####Score
 
+```python
     def display_score(self, Score):
         font = pygame.font.Font(None, 72)
         global screen_width
         score_text = font.render(f"Score: {Score}", True, (0, 0, 0))
         self.screen.blit(score_text, (screen_width - score_text.get_width() - 10, 10))
-		
+```
+
 #####Initialization of Pygame Screen
 
+```python
     def update_screen(self, frame):
         frame_surface = pygame.surfarray.make_surface(frame.swapaxes(0, 1))
         self.screen.blit(frame_surface, (0, 0))
+```
 
 ####class Main_Menu
 This class is used to customize main menu further.
 
 #####Display Button
+```python
     def button(Display_Text,offset):
         padding = 30 
         text = font.render(Display_Text, True, Melon)
@@ -252,17 +285,21 @@ This class is used to customize main menu further.
         text_rect = text.get_rect(center=rect.center)
         screen.blit(text, text_rect)
         return rect
+```
 #####Display Text
+```python
     def Text_Display(text,height,width,size):
         font = pygame.font.Font(None, size)
         text = font.render(text, True, Marron)
         rect = text.get_rect(center=(width, height))
         screen.blit(text,rect)
+```
 		
 ####class Main_Score:
 This class is used for displaying highest scores and saving scores.
 
 #####Saving Scores
+```python
     def store_scores(scores_filename, new_score):
      try:
         with open(scores_filename, 'r') as file:
@@ -278,22 +315,27 @@ This class is used for displaying highest scores and saving scores.
      except FileNotFoundError:
         with open(scores_filename, 'w') as file:
             file.write(f"{new_score}\n")
+```
 
 ####Retrieveing Score
 
+```python
     def retrieve_top_scores(scores_filename):
         with open(scores_filename, 'r') as file:
             scores_file = [int(line.strip()) for line in file]
         scores_file.sort(reverse=True)
         return scores_file
+```
 		
 ####class Sound
 This class is used to play sounds and make game more interactive.
 
+```python
     def Sound_Play_Loss():
         sound = pygame.mixer.Sound('Loss.mp3')
         sound.play()
     def Sound_Play_Win():
         sound = pygame.mixer.Sound('Win.mp3')
         sound.play()
+```
 ###End
