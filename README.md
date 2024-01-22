@@ -9,7 +9,7 @@ This repository contains a simple game implemented in Python using the Mediapipe
 [TOC]
 
 
-###How to Play
+### How to Play
 1. Execute the program and enjoy the Color Harmony Challenge.
 2. Balls of different colors will be falling from the top of the screen.
 3. The color of your hand is randomly assigned at the beginning.
@@ -17,36 +17,37 @@ This repository contains a simple game implemented in Python using the Mediapipe
 5. Each correct catch earns you 5 points, but catching the wrong color deducts 5 points.
 6. The game lasts for 60 seconds. Try to score as high as possible!
 
-###Requirements
+### Requirements
 + Python 3.7+
 + OpenCV
 + MediaPipe
 + Pygame
 + Webcam
 
-###Setup
+### Setup
 Use the following code in command line to install required modules
+      
        `pip install mediapipe opencv-python pygame
 `
 
-###Key Features
+### Key Features
 + Real-time hand tracking using MediaPipe
 + Catching balls with fingertip collision detection
 + Scorekeeping and time countdown
 + Colorful and responsive user interface
 + High score list to track your progress
 
-###Main Menu
+### Main Menu
 The main menu allows you to:
 + **START**: Begin a new Color Harmony Challenge.
 + **QUIT**: Exit the game
 
-###Game Over Screen
+### Game Over Screen
 After the game ends, you will see a Game Over screen with options:
 + ** RESTART**: Start a new game.
 + **QUIT**: Exit the game.
 
-###Additional Notes:
+### Additional Notes:
 
 + The game is optimized for playing with one hand.
 + The webcam should be able to clearly see your hand for accurate tracking.
@@ -54,7 +55,7 @@ After the game ends, you will see a Game Over screen with options:
 + You can change few varibles like speed of ball and no of balls coming at one time.
 + Feel free to modify the game parameters and colors in the ColourHarmonyChallenge.py file.
 
-###Customization
+### Customization
 In start of code only, you find few variables whose value you can alter to change gaming experience:
 
 ```python
@@ -64,13 +65,13 @@ Main_Y_velocity=4
 NoOfBalls=10
 ```
 
-###Code Blocks 
+### Code Blocks 
 Multiple classes have been used to make this game. Their Explanation is as follows
 
-####**class  BallTracking**
+#### *class  BallTracking*
 As the name suggests this is mainly used to used to track all stats of ball moving on screen and to update the ball acoording to the possible interactions.
 
-#####Initialization
+##### Initialization
 ```python
     def __init__(self,x,y,r,velocity_x, velocity_y,ball_color):
         self.x = x
@@ -81,7 +82,7 @@ As the name suggests this is mainly used to used to track all stats of ball movi
         self.velocity_y = velocity_y
 ```
 
-#####Creating New Ball
+##### Creating New Ball
 
 ```python
     @classmethod
@@ -98,7 +99,7 @@ As the name suggests this is mainly used to used to track all stats of ball movi
             return new_ball
 ```
 
-#####Checking New Ball
+##### Checking New Ball
 
 ```python
     def check_new_ball(x,r):
@@ -110,7 +111,7 @@ As the name suggests this is mainly used to used to track all stats of ball movi
         return True
 ```
 
-#####Ball and Boundary Interaction
+##### Ball and Boundary Interaction
 
 ```python
     def check_ball_boundary_interaction(self):
@@ -121,7 +122,7 @@ As the name suggests this is mainly used to used to track all stats of ball movi
             balls_list.append(BallTracking.create_ball())
 ```
 
-#####Ball to Ball Interaction
+##### Ball to Ball Interaction
 
 ```python
     def check_balls_interaction():
@@ -136,14 +137,14 @@ As the name suggests this is mainly used to used to track all stats of ball movi
 ```
 
 
-#####Ball's Position Change
+##### Ball's Position Change
 ```python
     def update_ball(self):
         self.y += self.velocity_y
         self.x += self.velocity_x
 ```
     
-#####Index Finger and Ball Interaction
+##### Index Finger and Ball Interaction
 
 ```python
     def check_finger_ball_interaction(self, finger_x, finger_y):
@@ -162,11 +163,11 @@ As the name suggests this is mainly used to used to track all stats of ball movi
         return 0, HandColor
 ```
 
-####**class HandRecognition**
+#### *class HandRecognition*
 
 It uses mediapipe module to track hands and index finger.
 
-#####Initialization
+##### Initialization
 ```python
     def __init__(self):
         self.mp_hands = mp.solutions.hands.Hands(
@@ -177,7 +178,7 @@ It uses mediapipe module to track hands and index finger.
         self.mp_drawing = mp.solutions.drawing_utils
 ```
 
-#####Index Finger Coordinated
+##### Index Finger Coordinated
 
 ```python
     def get_index_fingertip_coordinates(self, hand_landmarks_list, frame):
@@ -191,7 +192,7 @@ It uses mediapipe module to track hands and index finger.
             return None, None
 ```
 
-#####Hand Detection
+##### Hand Detection
 
 ```python
     def detect_and_highlight_hands(self, frame):
@@ -212,11 +213,11 @@ It uses mediapipe module to track hands and index finger.
         return frame, hand_landmarks_list
 ```
 
-####class GameEnvironment:
+#### *class GameEnvironment:*
 
 This used pygame module to create a gaming environment.
 
-#####Initialization
+##### Initialization
 
 ```python
     def __init__(self):
@@ -224,7 +225,7 @@ This used pygame module to create a gaming environment.
         pygame.display.set_caption("Color Harmony Challenge")
 ```
 
-#####Creation of Balls
+##### Creation of Balls
 
 ```python
     def draw_balls(self,ball):
@@ -232,7 +233,7 @@ This used pygame module to create a gaming environment.
             pygame.draw.circle(self.screen, ball.ball_color, (ball.x, ball.y), ball.r)
 ```
             
-#####Index Finger 
+##### Index Finger 
 
 ```python
     def draw_Index_finger(self,x,y):
@@ -240,7 +241,7 @@ This used pygame module to create a gaming environment.
             pygame.draw.circle(self.screen, HandColor, (x,y), 10)
 ```
             
-#####Time
+##### Time
 
 ```python
     def display_time(self, remaining_time):
@@ -249,7 +250,7 @@ This used pygame module to create a gaming environment.
         self.screen.blit(text, (10, 10))
 ```
 
-#####Score
+##### Score
 
 ```python
     def display_score(self, Score):
@@ -259,7 +260,7 @@ This used pygame module to create a gaming environment.
         self.screen.blit(score_text, (screen_width - score_text.get_width() - 10, 10))
 ```
 
-#####Initialization of Pygame Screen
+##### Initialization of Pygame Screen
 
 ```python
     def update_screen(self, frame):
@@ -267,10 +268,10 @@ This used pygame module to create a gaming environment.
         self.screen.blit(frame_surface, (0, 0))
 ```
 
-####class Main_Menu
+#### *class Main_Menu*
 This class is used to customize main menu further.
 
-#####Display Button
+##### Display Button
 ```python
     def button(Display_Text,offset):
         padding = 30 
@@ -286,7 +287,7 @@ This class is used to customize main menu further.
         screen.blit(text, text_rect)
         return rect
 ```
-#####Display Text
+##### Display Text
 ```python
     def Text_Display(text,height,width,size):
         font = pygame.font.Font(None, size)
@@ -295,10 +296,10 @@ This class is used to customize main menu further.
         screen.blit(text,rect)
 ```
 		
-####class Main_Score:
+#### *class Main_Score*
 This class is used for displaying highest scores and saving scores.
 
-#####Saving Scores
+##### Saving Scores
 ```python
     def store_scores(scores_filename, new_score):
      try:
@@ -317,7 +318,7 @@ This class is used for displaying highest scores and saving scores.
             file.write(f"{new_score}\n")
 ```
 
-####Retrieveing Score
+#### Retrieveing Score
 
 ```python
     def retrieve_top_scores(scores_filename):
@@ -327,7 +328,7 @@ This class is used for displaying highest scores and saving scores.
         return scores_file
 ```
 		
-####class Sound
+#### class Sound
 This class is used to play sounds and make game more interactive.
 
 ```python
@@ -338,4 +339,4 @@ This class is used to play sounds and make game more interactive.
         sound = pygame.mixer.Sound('Win.mp3')
         sound.play()
 ```
-###End
+### End
