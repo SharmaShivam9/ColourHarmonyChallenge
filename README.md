@@ -36,7 +36,7 @@ The main menu allows you to:
 
 ### Game Over Screen
 After the game ends, you will see a Game Over screen with options:
-+ ** RESTART**: Start a new game.
++ **RESTART**: Start a new game.
 + **QUIT**: Exit the game.
 
 ### Additional Notes:
