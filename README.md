@@ -331,4 +331,3 @@ This class is used to play sounds and make game more interactive.
         sound = pygame.mixer.Sound('Win.mp3')
         sound.play()
 ```
-### End
