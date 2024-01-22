@@ -27,8 +27,7 @@ This repository contains a simple game implemented in Python using the Mediapipe
 ### Setup
 Use the following code in command line to install required modules
       
-       `pip install mediapipe opencv-python pygame
-`
+       pip install mediapipe opencv-python pygame
 
 ### Key Features
 + Real-time hand tracking using MediaPipe
