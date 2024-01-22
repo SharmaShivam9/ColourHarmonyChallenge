@@ -1,12 +1,5 @@
-## ColourHarmonyChallenge
+# ColourHarmonyChallenge
 This repository contains a simple game implemented in Python using the Mediapipe library for hand tracking and Pygame for the graphical user interface. The game involves tracking the movement of the user's index finger, represented by a colored circle, and matching it with falling balls of corresponding colors. It is surprisingly intersting and captivating Game. This game was made as an assignment in project Image Processing using Machine Learning under the GDSC  (Google Developer Student Club), IIT Kanpur.
-
-
-**Table of Contents**
-
-[TOCM]
-
-[TOC]
 
 
 ### How to Play
