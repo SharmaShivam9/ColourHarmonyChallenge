@@ -11,7 +11,7 @@ This repository contains a simple game implemented in Python using the Mediapipe
 6. The game lasts for 60 seconds. Try to score as high as possible!
 
 ### Requirements
-+ Python 3.7+
++ Python 3.10.6
 + OpenCV
 + MediaPipe
 + Pygame
